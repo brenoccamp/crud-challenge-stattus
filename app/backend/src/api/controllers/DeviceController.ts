@@ -32,7 +32,6 @@ export default class DeviceController implements IDeviceController {
   ): Promise<Response | void> => {
     try {
       const id = Number(req.params.id);
-
       const device = await this._deviceService.getDeviceById(id);
 
       if (!device) return res.status(404).json({ message: 'Device not found' });

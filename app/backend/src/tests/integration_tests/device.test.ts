@@ -10,12 +10,12 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-const errorObj = '...Ooops, something was wrong!';
+const errorObj = { error: 'Internal server error' };
 
 describe('I&T Device Tests', () => {
   let chaiHttpResponse: Response;
 
-  describe('Testing Route "/devices" to GET ALL DEVICES ', () => {
+  describe('Testing Route "/devices" to GET ALL DEVICES', () => {
     afterEach(() => {
       (DeviceModel.findAll as sinon.SinonStub).restore();
     });
