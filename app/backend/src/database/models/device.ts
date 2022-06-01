@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
 
-class StoresModel extends Model {
+class DeviceModel extends Model {
   declare id: number;
 
   declare version: string;
@@ -13,7 +13,7 @@ class StoresModel extends Model {
   declare updatedAt: Date;
 }
 
-StoresModel.init({
+DeviceModel.init({
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   version: { type: DataTypes.STRING, allowNull: false },
   tags: { type: DataTypes.STRING, allowNull: false },
@@ -27,4 +27,4 @@ StoresModel.init({
   tableName: 'devices',
 });
 
-export default StoresModel;
+export default DeviceModel;
