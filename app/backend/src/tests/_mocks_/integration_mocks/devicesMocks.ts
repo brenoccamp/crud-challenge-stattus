@@ -21,3 +21,16 @@ export const mockedAllDevices = [
       "updatedAt": "2022-06-01T16:05:07.738Z"
   }
 ];
+
+export const mockedCreatedDevice = {
+    id: 1,
+    version: '35001',
+    tags: '1;2',
+    updatedAt: '2022-06-01T18:20:33.829Z',
+    createdAt: '2022-06-01T18:20:33.829Z'
+  };
+
+export const mockedNewDeviceControllerResponse = { createdId: 1 };
+
+export const error_missing_field = { error: 'New device must have filled keys: "version" and "tags"' };
+export const error_typeof_field = { error: 'Fields "version" and "tags" must be a string' };
