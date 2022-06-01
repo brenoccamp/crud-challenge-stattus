@@ -4,7 +4,7 @@ import chaiHttp = require('chai-http');
 import { Response } from 'superagent';
 import { app } from '../../app';
 import DeviceModel from '../../database/models/device';
-import { mockedAllDevices } from '../_mocks_/devicesMocks';
+import { mockedAllDevices } from '../_mocks_/integration_mocks/devicesMocks';
 
 chai.use(chaiHttp);
 
