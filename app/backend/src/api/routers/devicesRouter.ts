@@ -1,25 +1,34 @@
 import { Router } from 'express';
+import DeviceController from '../controllers/DeviceController';
+import DeviceService from '../services/DeviceService';
 
 const devicesRouter = Router();
+const deviceService = new DeviceService();
+const deviceController = new DeviceController(deviceService);
 
-const ROUTE_WITH_ID = '/devices/:id';
+const ROUTE_WITH_ID = '/:id';
 
 devicesRouter.get(
-  '/devices',
-  /* devicesController */
+  '/',
+  deviceController.getAllDevices,
 );
 
 devicesRouter.get(
   ROUTE_WITH_ID,
-  /* devicesController */
+  deviceController.getDeviceById,
 );
 
 devicesRouter.post(
-  '/devices',
+  '/',
   /* devicesController */
 );
 
 devicesRouter.patch(
+  ROUTE_WITH_ID,
+  /* devicesController */
+);
+
+devicesRouter.put(
   ROUTE_WITH_ID,
   /* devicesController */
 );
