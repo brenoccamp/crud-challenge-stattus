@@ -2,7 +2,7 @@ import * as sinon from 'sinon';
 import * as chai from 'chai';
 import DeviceModel from '../../../database/models/device';
 import DeviceService from '../../../api/services/DeviceService';
-import { mockedAllDevices } from '../../_mocks_/devicesMocks';
+import { mockedAllDevices } from '../../_mocks_/unit_mocks/devicesMocks';
 
 const { expect } = chai;
 
