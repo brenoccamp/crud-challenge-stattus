@@ -9,13 +9,12 @@ export default class DeviceService implements IDeviceService {
   }
 
   public getAllDevices = async (): Promise<IDevice[]> => {
-    const devices = await this._deviceModel.findAll();
-    return devices;
+    const allDevices = await this._deviceModel.findAll();
+    return allDevices;
   };
 
   public getDeviceById = async (id: number): Promise<IDevice | null> => {
     const device = await this._deviceModel.findByPk(id);
-
     return device;
   };
 }
