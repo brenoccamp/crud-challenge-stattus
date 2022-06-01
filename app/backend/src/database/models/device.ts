@@ -8,17 +8,17 @@ class DeviceModel extends Model {
 
   declare tags: string;
 
-  declare createdAt: Date;
+  declare created_at: Date;
 
-  declare updatedAt: Date;
+  declare updated_at: Date;
 }
 
 DeviceModel.init({
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   version: { type: DataTypes.STRING, allowNull: false },
   tags: { type: DataTypes.STRING, allowNull: false },
-  createdAt: DataTypes.DATE,
-  updatedAt: DataTypes.DATE,
+  created_at: DataTypes.DATE,
+  updated_at: DataTypes.DATE,
 }, {
   sequelize: db,
   modelName: 'DeviceModel',

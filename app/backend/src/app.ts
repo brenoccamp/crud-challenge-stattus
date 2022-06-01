@@ -2,7 +2,7 @@ import * as express from 'express';
 import devicesRouter from './api/routers/devicesRouter';
 import ErrorMiddleware from './api/middlewares/error';
 
-export default class App {
+class App {
   public app: express.Express;
 
   constructor() {
@@ -32,3 +32,7 @@ export default class App {
     this.app.listen(PORT, () => console.log(`App Running on port ${PORT}`));
   }
 }
+
+export { App };
+
+export const { app } = new App();
