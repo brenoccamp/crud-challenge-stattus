@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
 
-class StoresModel extends Model {
+class TagModel extends Model {
   declare id: number;
 
   declare name: string;
@@ -13,7 +13,7 @@ class StoresModel extends Model {
   declare updatedAt: Date;
 }
 
-StoresModel.init({
+TagModel.init({
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, allowNull: false },
   color: { type: DataTypes.STRING, allowNull: false },
@@ -27,4 +27,4 @@ StoresModel.init({
   tableName: 'tags',
 });
 
-export default StoresModel;
+export default TagModel;
