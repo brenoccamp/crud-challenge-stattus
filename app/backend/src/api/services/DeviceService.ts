@@ -14,8 +14,8 @@ export default class DeviceService implements IDeviceService {
   };
 
   public getDeviceById = async (id: number): Promise<IDevice | null> => {
-    const device = await this._deviceModel.findByPk(id);
-    return device;
+    const foundedDevice = await this._deviceModel.findByPk(id);
+    return foundedDevice;
   };
 
   public createNewDevice = async (newDevice: IDevice): Promise<{ createdId: number; }> => {
