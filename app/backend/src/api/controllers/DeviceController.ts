@@ -18,9 +18,9 @@ export default class DeviceController implements IDeviceController {
     next: NextFunction,
   ): Promise<Response | void> => {
     try {
-      const devices = await this._deviceService.getAllDevices();
+      const allDevices = await this._deviceService.getAllDevices();
 
-      return res.status(200).json(devices);
+      return res.status(200).json(allDevices);
     } catch (error) {
       next(error);
     }
@@ -33,11 +33,11 @@ export default class DeviceController implements IDeviceController {
   ): Promise<Response | void> => {
     try {
       const id = Number(req.params.id);
-      const device = await this._deviceService.getDeviceById(id);
+      const foundedDevice = await this._deviceService.getDeviceById(id);
 
-      if (!device) return res.status(404).json({ message: 'Device not found' });
+      if (!foundedDevice) return res.status(404).json({ message: 'Device not found' });
 
-      return res.status(200).json(device);
+      return res.status(200).json(foundedDevice);
     } catch (error) {
       next(error);
     }
