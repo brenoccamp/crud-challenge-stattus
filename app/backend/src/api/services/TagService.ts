@@ -9,12 +9,15 @@ export default class TagService implements ITagService {
   }
 
   public getAllTags = async (): Promise<ITag[]> => {
-    const allTags = await this._tagModel.findAll();
+    const allTags = await this._tagModel
+      .findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] } });
     return allTags;
   };
 
   public getTagById = async (id: number): Promise<ITag | null> => {
-    const foundedTag = await this._tagModel.findByPk(id);
+    const foundedTag = await this._tagModel.findByPk(id, {
+      attributes: { exclude: ['createdAt', 'updatedAt'] },
+    });
     return foundedTag;
   };
 
