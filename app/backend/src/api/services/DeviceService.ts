@@ -52,4 +52,17 @@ export default class DeviceService implements IDeviceService {
     await this._deviceModel.update({ [fieldToEdit]: newData }, { where: { id } });
     return true;
   };
+
+  public updateDevice = async (id: number, newData: IDevice): Promise<boolean | null> => {
+    const foundedDevice = await this.getDeviceById(id);
+    if (!foundedDevice) return null;
+
+    const { version, tags } = newData;
+
+    const allTagsExists = await this.checkIfAllTagsExist(tags);
+    if (!allTagsExists) return false;
+
+    await this._deviceModel.update({ version, tags }, { where: { id } });
+    return true;
+  };
 }

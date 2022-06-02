@@ -36,7 +36,9 @@ devicesRouter.patch(
 
 devicesRouter.put(
   ROUTE_WITH_ID,
-  /* devicesController */
+  versionFieldValidate,
+  tagsFieldValidate,
+  deviceController.updateDevice,
 );
 
 devicesRouter.delete(
