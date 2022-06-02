@@ -2,6 +2,7 @@ import { Router } from 'express';
 import TagController from '../controllers/TagController';
 import TagService from '../services/TagService';
 import { nameFieldValidate, colorFieldValidate } from '../middlewares/tagFieldsValidations';
+import patchTagValidate from '../middlewares/patchTagValidate';
 
 const tagsRouter = Router();
 
@@ -29,17 +30,20 @@ tagsRouter.post(
 
 tagsRouter.patch(
   ROUTE_WITH_ID,
-  /* tagsController */
+  patchTagValidate,
+  tagController.editTag,
 );
 
 tagsRouter.put(
   ROUTE_WITH_ID,
-  /* tagsController */
+  nameFieldValidate,
+  colorFieldValidate,
+  tagController.updateTag,
 );
 
 tagsRouter.delete(
   ROUTE_WITH_ID,
-  /* tagsController */
+  tagController.updateTag,
 );
 
 export default tagsRouter;

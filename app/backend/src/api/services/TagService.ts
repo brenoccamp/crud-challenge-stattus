@@ -26,4 +26,33 @@ export default class TagService implements ITagService {
 
     return { createdId: createdTag.id };
   };
+
+  public editTag = async (id: number, newData: string, fieldToEdit: string): Promise<boolean> => {
+    const foundedTag = await this.getTagById(id);
+    if (!foundedTag) return false;
+
+    await this._tagModel.update({ [fieldToEdit]: newData }, { where: { id } });
+    return true;
+  };
+
+  public updateTag = async (id: number, newData: ITag): Promise<boolean> => {
+    const foundedTag = await this.getTagById(id);
+
+    if (!foundedTag) return false;
+
+    const { name, color } = newData;
+    await this._tagModel.update({ name, color }, { where: { id } });
+
+    return true;
+  };
+
+  public deleteTag = async (id: number): Promise<boolean> => {
+    const foundedTag = await this.getTagById(id);
+
+    if (!foundedTag) return false;
+
+    await this._tagModel.destroy({ where: { id } });
+
+    return true;
+  };
 }
