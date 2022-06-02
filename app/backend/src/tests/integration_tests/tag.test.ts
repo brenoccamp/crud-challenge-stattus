@@ -8,6 +8,8 @@ import {
   mockedAllTags,
   mockedCreatedTag,
   mockedNewTagControllerResponse,
+  error_missing_field,
+  error_typeof_field,
 } from '../_mocks_/integration_mocks/tagsMocks';
 
 chai.use(chaiHttp);
@@ -90,6 +92,66 @@ describe('I&T Tag Tests', () => {
 
       expect(chaiHttpResponse.status).to.be.equal(201);
       expect(chaiHttpResponse.body).to.be.deep.equal(mockedNewTagControllerResponse);
+    });
+
+    it('Expected Error Case - Returns 422 if body missing "name" field', async () => {
+      sinon.stub(TagModel, 'create').resolves(mockedCreatedTag as unknown as TagModel);
+
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/tags')
+        .send({ color: '#000' });
+
+      expect(chaiHttpResponse.status).to.be.equal(422);
+      expect(chaiHttpResponse.body).to.be.deep.equal(error_missing_field);
+    });
+
+    it('Expected Error Case - Returns 422 if body missing "color" field', async () => {
+      sinon.stub(TagModel, 'create').resolves(mockedCreatedTag as unknown as TagModel);
+
+      chaiHttpResponse = await chai
+      .request(app)
+      .post('/tags')
+      .send({ name: 'São Paulo' });
+
+      expect(chaiHttpResponse.status).to.be.equal(422);
+      expect(chaiHttpResponse.body).to.be.deep.equal(error_missing_field);
+    });
+
+    it('Expected Error Case - Returns 422 if value of field "name" is not a string', async () => {
+      sinon.stub(TagModel, 'create').resolves(mockedCreatedTag as unknown as TagModel);
+
+      chaiHttpResponse = await chai
+      .request(app)
+      .post('/tags')
+      .send({ name: 1, color: "#000" });
+
+      expect(chaiHttpResponse.status).to.be.equal(422);
+      expect(chaiHttpResponse.body).to.be.deep.equal(error_typeof_field);
+    });
+
+    it('Expected Error Case - Returns 422 if value of field "color" is not a string', async () => {
+      sinon.stub(TagModel, 'create').resolves(mockedCreatedTag as unknown as TagModel);
+
+      chaiHttpResponse = await chai
+      .request(app)
+      .post('/tags')
+      .send({ name: "São Paulo", color: 1 });
+
+      expect(chaiHttpResponse.status).to.be.equal(422);
+      expect(chaiHttpResponse.body).to.be.deep.equal(error_typeof_field);
+    });
+
+    it('Unexpected Error Case - Returns status 500 and an error message', async () => {
+      sinon.stub(TagModel, 'create').throws(errorObj);
+
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/tags')
+        .send({ name: 'São Paulo', color: '#000' });
+
+      expect(chaiHttpResponse.status).to.be.equal(500);
+      expect(chaiHttpResponse.body.error).to.be.equal('Internal server error');
     });
   });
 });
