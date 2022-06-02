@@ -33,6 +33,7 @@ export default class DeviceService implements IDeviceService {
     if (!allTagsExists) return allTagsExists;
 
     const createdDevice = await this._deviceModel.create({ ...newDevice });
+
     return { createdId: createdDevice.id };
   };
 }
