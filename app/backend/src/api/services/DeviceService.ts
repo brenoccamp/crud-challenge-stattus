@@ -65,4 +65,13 @@ export default class DeviceService implements IDeviceService {
     await this._deviceModel.update({ version, tags }, { where: { id } });
     return true;
   };
+
+  public deleteDevice = async (id: number): Promise<boolean> => {
+    const foundedDevice = await this.getDeviceById(id);
+    if (!foundedDevice) return false;
+
+    await this._deviceModel.destroy({ where: { id } });
+
+    return true;
+  };
 }

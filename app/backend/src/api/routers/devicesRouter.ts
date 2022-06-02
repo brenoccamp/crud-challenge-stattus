@@ -43,7 +43,7 @@ devicesRouter.put(
 
 devicesRouter.delete(
   ROUTE_WITH_ID,
-  /* devicesController */
+  deviceController.deleteDevice,
 );
 
 export default devicesRouter;

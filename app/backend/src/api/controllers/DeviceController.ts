@@ -9,6 +9,9 @@ const ERROR_SOME_TAG_NOT_FOUND = {
   error: 'Sorry. Any given tag does not exist. Check it and try again.',
 };
 const ERROR_DEVICE_NOT_FOUND = { error: 'Device not found.' };
+const NOT_FOUND_STATUS_CODE = 404;
+const SUCCESS_STATUS_CODE = 200;
+const NO_CONTENT_STATUS_CODE = 204;
 
 export default class DeviceController implements IDeviceController {
   private _deviceService;
@@ -25,7 +28,7 @@ export default class DeviceController implements IDeviceController {
     try {
       const allDevices = await this._deviceService.getAllDevices();
 
-      return res.status(200).json(allDevices);
+      return res.status(SUCCESS_STATUS_CODE).json(allDevices);
     } catch (error) {
       next(error);
     }
@@ -40,9 +43,9 @@ export default class DeviceController implements IDeviceController {
       const id = Number(req.params.id);
       const foundedDevice = await this._deviceService.getDeviceById(id);
 
-      if (!foundedDevice) return res.status(404).json(ERROR_DEVICE_NOT_FOUND);
+      if (!foundedDevice) return res.status(NOT_FOUND_STATUS_CODE).json(ERROR_DEVICE_NOT_FOUND);
 
-      return res.status(200).json(foundedDevice);
+      return res.status(SUCCESS_STATUS_CODE).json(foundedDevice);
     } catch (error) {
       next(error);
     }
@@ -58,7 +61,7 @@ export default class DeviceController implements IDeviceController {
 
       const createdDevice = await this._deviceService.createNewDevice(newDeviceData);
 
-      if (!createdDevice) return res.status(404).json(ERROR_SOME_TAG_NOT_FOUND);
+      if (!createdDevice) return res.status(NOT_FOUND_STATUS_CODE).json(ERROR_SOME_TAG_NOT_FOUND);
 
       return res.status(201).json(createdDevice);
     } catch (error) {
@@ -78,9 +81,9 @@ export default class DeviceController implements IDeviceController {
       const editedDevice = await this._deviceService
         .editDevice(id, newData as string, fieldToEdit);
 
-      if (!editedDevice) return res.status(404).json(ERROR_SOME_TAG_NOT_FOUND);
+      if (!editedDevice) return res.status(NOT_FOUND_STATUS_CODE).json(ERROR_SOME_TAG_NOT_FOUND);
 
-      return res.status(204).end();
+      return res.status(NO_CONTENT_STATUS_CODE).end();
     } catch (error) {
       next(error);
     }
@@ -100,7 +103,25 @@ export default class DeviceController implements IDeviceController {
       if (updatedDevice === null) return res.status(404).json(ERROR_DEVICE_NOT_FOUND);
       if (updatedDevice === false) return res.status(404).json(ERROR_SOME_TAG_NOT_FOUND);
 
-      return res.status(204).end();
+      return res.status(NO_CONTENT_STATUS_CODE).end();
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  deleteDevice = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response | void> => {
+    try {
+      const id = Number(req.params.id);
+
+      const deletedDevice = await this._deviceService.deleteDevice(id);
+
+      if (!deletedDevice) return res.status(NOT_FOUND_STATUS_CODE).json(ERROR_DEVICE_NOT_FOUND);
+
+      return res.status(NO_CONTENT_STATUS_CODE).end();
     } catch (error) {
       next(error);
     }
