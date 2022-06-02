@@ -2,6 +2,7 @@ import { Router } from 'express';
 import DeviceController from '../controllers/DeviceController';
 import DeviceService from '../services/DeviceService';
 import { versionFieldValidate, tagsFieldValidate } from '../middlewares/deviceFieldsValidations';
+import patchDeviceValidate from '../middlewares/patchDeviceValidate';
 
 const devicesRouter = Router();
 
@@ -29,7 +30,8 @@ devicesRouter.post(
 
 devicesRouter.patch(
   ROUTE_WITH_ID,
-  /* devicesController */
+  patchDeviceValidate,
+  deviceController.editDevice,
 );
 
 devicesRouter.put(

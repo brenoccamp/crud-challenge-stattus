@@ -63,4 +63,27 @@ export default class DeviceController implements IDeviceController {
       next(error);
     }
   };
+
+  public editDevice = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response | void> => {
+    try {
+      const id = Number(req.params.id);
+      const [fieldToEdit, newData] = Object.entries(req.body)[0];
+
+      const editedDevice = await this._deviceService
+        .editDevice(id, newData as string, fieldToEdit);
+
+      if (!editedDevice) {
+        return res.status(404)
+          .json({ error: 'Sorry. Any given tag does not exist. Check it and try again.' });
+      }
+
+      return res.status(204).end();
+    } catch (error) {
+      next(error);
+    }
+  };
 }
