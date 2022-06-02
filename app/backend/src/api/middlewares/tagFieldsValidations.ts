@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 const UNPROCESSABLE_ENTITY_STATUS_HTTP = 422;
+const BAD_REQUEST_STATUS_HTTP = 400;
 const ERROR_MISSING_FIELD = { error: 'New tag must have filled keys: "name" and "color"' };
 const ERROR_TYPEOF_FIELD = { error: 'Fields "name" and "color" must be a string' };
 
@@ -12,7 +13,7 @@ export const nameFieldValidate = (
   try {
     const { name } = req.body;
 
-    if (!name) return res.status(UNPROCESSABLE_ENTITY_STATUS_HTTP).json(ERROR_MISSING_FIELD);
+    if (!name) return res.status(BAD_REQUEST_STATUS_HTTP).json(ERROR_MISSING_FIELD);
 
     if (typeof name !== 'string') {
       return res.status(UNPROCESSABLE_ENTITY_STATUS_HTTP).json(ERROR_TYPEOF_FIELD);
@@ -32,7 +33,7 @@ export const colorFieldValidate = (
   try {
     const { color } = req.body;
 
-    if (!color) return res.status(UNPROCESSABLE_ENTITY_STATUS_HTTP).json(ERROR_MISSING_FIELD);
+    if (!color) return res.status(BAD_REQUEST_STATUS_HTTP).json(ERROR_MISSING_FIELD);
 
     if (typeof color !== 'string') {
       return res.status(UNPROCESSABLE_ENTITY_STATUS_HTTP).json(ERROR_TYPEOF_FIELD);

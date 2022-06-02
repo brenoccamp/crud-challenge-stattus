@@ -22,6 +22,7 @@ const patchDeviceValidate = (req: Request, res: Response, next: NextFunction): R
 
       if (wrongTags) return res.status(UNPROCESSABLE_ENTITY_STATUS_HTTP).json(ERROR_TAGS_MALFORMED);
     }
+
     next();
   } catch (error) {
     next(error);
