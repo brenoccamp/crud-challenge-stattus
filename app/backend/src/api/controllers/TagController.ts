@@ -31,7 +31,7 @@ export default class TagController implements ITagController {
       const id = Number(req.params.id);
       const foundedTag = await this._tagService.getTagById(id);
 
-      if (!foundedTag) return res.status(400).json({ message: 'Tag not found' });
+      if (!foundedTag) return res.status(404).json({ error: 'Tag not found' });
 
       return res.status(200).json(foundedTag);
     } catch (error) {

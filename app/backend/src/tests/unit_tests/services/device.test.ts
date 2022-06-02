@@ -10,7 +10,7 @@ const deviceService = new DeviceService();
 
 const deviceId = 1;
 
-describe('Services Unit Tests', () => {
+describe('Device Service Unit Tests', () => {
   describe('Testing service getAllDevices', () => {
     afterEach(() => {
       (DeviceModel.findAll as sinon.SinonStub).restore();

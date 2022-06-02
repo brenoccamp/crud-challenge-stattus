@@ -2,16 +2,21 @@ import * as sinon from 'sinon';
 import * as chai from 'chai';
 import DeviceController from '../../../api/controllers/DeviceController';
 import DeviceService from '../../../api/services/DeviceService';
-import { mockedAllDevices } from '../../_mocks_/unit_mocks/devicesMocks';
+import {
+  mockedAllDevices,
+  mockedCreatedNewDeviceID,
+  mockedNewDeviceData,
+} from '../../_mocks_/unit_mocks/devicesMocks';
 
 const deviceService = new DeviceService();
 const deviceController = new DeviceController(deviceService);
 
 const errorObj = { error: 'Internal server error' };
-const notFoundError = { message: 'Device not found' };
+const notFoundError = { error: 'Device not found' };
+const errorCreatingNewDevice = { error: 'Sorry. Any given tag does not exist. Check it and try again.' };
 
-describe('Controllers Unit Tests', () => {
-  const req = { body: {}, params: {} } as any;
+describe('Device Controller Unit Tests', () => {
+  let req = { body: {}, params: {} } as any;
   const res = { json: sinon.spy(), status: sinon.stub().returns({ json: sinon.spy() })} as any;
   const next = sinon.spy();
 
@@ -75,6 +80,44 @@ describe('Controllers Unit Tests', () => {
         .throws(errorObj);
       
       await deviceController.getDeviceById(req, res, next);
+
+      sinon.assert.calledWith(next);
+    });
+  });
+
+  describe('Testing handler createNewDevice', () => {
+    afterEach(() => {
+      (deviceService.createNewDevice as sinon.SinonStub).restore();
+    });
+
+    it('Success Case - Returns status 201 and created device id', async () => {
+      sinon
+      .stub(deviceService, 'createNewDevice')
+      .resolves(mockedCreatedNewDeviceID);
+
+      await deviceController.createNewDevice(req, res, next);
+
+      sinon.assert.calledWith(res.status, 201);
+      sinon.assert.calledWith(res.status().json, mockedCreatedNewDeviceID);
+    });
+
+    it('Expected Error Case - Returns status 404 and not found message', async () => {
+      sinon
+      .stub(deviceService, 'createNewDevice')
+      .resolves(false);
+
+      await deviceController.createNewDevice(req, res, next);
+
+      sinon.assert.calledWith(res.status, 404);
+      sinon.assert.calledWith(res.status().json, errorCreatingNewDevice);
+    });
+
+    it('Unexpected Error Case - Next function is called', async () => {
+      sinon
+        .stub(deviceService, 'createNewDevice')
+        .throws(errorObj);
+      
+      await deviceController.createNewDevice(req, res, next);
 
       sinon.assert.calledWith(next);
     });
