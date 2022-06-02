@@ -53,6 +53,11 @@ export default class DeviceController implements IDeviceController {
 
       const createdDevice = await this._deviceService.createNewDevice(newDeviceData);
 
+      if (!createdDevice) {
+        return res.status(404)
+          .json({ error: 'Sorry. Any given tag does not exist. Check it and try again.' });
+      }
+
       return res.status(201).json(createdDevice);
     } catch (error) {
       next(error);

@@ -4,6 +4,7 @@ import DeviceService from '../services/DeviceService';
 import deviceDataValidate from '../middlewares/deviceDataValidate';
 
 const devicesRouter = Router();
+
 const deviceService = new DeviceService();
 const deviceController = new DeviceController(deviceService);
 

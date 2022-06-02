@@ -17,5 +17,5 @@ export interface IDeviceController {
 export interface IDeviceService {
   getAllDevices(): Promise<IDevice[]>;
   getDeviceById(id: number): Promise<IDevice | null>;
-  createNewDevice(newDevice: IDevice): Promise<{ createdId: number }>;
+  createNewDevice(newDevice: IDevice): Promise<{ createdId: number } | boolean>;
 }
