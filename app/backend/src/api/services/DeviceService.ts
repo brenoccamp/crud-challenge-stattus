@@ -22,13 +22,19 @@ export default class DeviceService implements IDeviceService {
     return foundedDevice;
   };
 
-  public createNewDevice = async (newDevice: IDevice):Promise<{ createdId: number; } | boolean> => {
-    const { tags } = newDevice;
-
-    const allTagsExists = await Promise.all(tags.split(';')
+  private checkIfAllTagsExist = async (tagsString: string): Promise<boolean> => {
+    const allTagsExists = await Promise.all(tagsString.split(';')
       .map((tagId) => this._tagModel.findByPk(tagId)))
       .then((resolvedPromises) => resolvedPromises
         .every((value) => value !== null));
+
+    return allTagsExists;
+  };
+
+  public createNewDevice = async (newDevice: IDevice):Promise<{ createdId: number; } | boolean> => {
+    const { tags } = newDevice;
+
+    const allTagsExists = this.checkIfAllTagsExist(tags);
 
     if (!allTagsExists) return allTagsExists;
 
