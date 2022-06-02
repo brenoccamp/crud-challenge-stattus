@@ -34,3 +34,16 @@ export const mockedNewDeviceControllerResponse = { createdId: 1 };
 
 export const error_missing_field = { error: 'New device must have filled keys: "version" and "tags"' };
 export const error_typeof_field = { error: 'Fields "version" and "tags" must be a string' };
+
+export const mockedAllTagsExist = [
+  {
+    "id": "1",
+    "version": "São Paulo",
+    "color": "#000"
+  },
+  {
+      "id": "2",
+      "version": "Sorocaba",
+      "color": "#fff"
+  },
+]
