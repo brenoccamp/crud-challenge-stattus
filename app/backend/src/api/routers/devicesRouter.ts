@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import DeviceController from '../controllers/DeviceController';
 import DeviceService from '../services/DeviceService';
-import deviceDataValidate from '../middlewares/deviceDataValidate';
+import { versionFieldValidate, tagsFieldValidate } from '../middlewares/deviceFieldsValidations';
 
 const devicesRouter = Router();
 
@@ -22,7 +22,8 @@ devicesRouter.get(
 
 devicesRouter.post(
   '/',
-  deviceDataValidate,
+  versionFieldValidate,
+  tagsFieldValidate,
   deviceController.createNewDevice,
 );
 
