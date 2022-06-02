@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import TagController from '../controllers/TagController';
 import TagService from '../services/TagService';
-import { nameFieldValidate, colorFieldValidate } from '../middlewares/tagFieldValidations';
+import { nameFieldValidate, colorFieldValidate } from '../middlewares/tagFieldsValidations';
 
 const tagsRouter = Router();
 
