@@ -10,7 +10,9 @@ import {
   mockedNewDeviceControllerResponse,
   error_missing_field,
   error_typeof_field,
+  mockedAllTagsExist,
 } from '../_mocks_/integration_mocks/devicesMocks';
+import TagModel from '../../database/models/tags';
 
 chai.use(chaiHttp);
 
@@ -78,6 +80,14 @@ describe('I&T Device Tests', () => {
   });
 
   describe('Testing Route POST "/devices/:id" to CREATE NEW DEVICE', () => {
+    before(() => {
+      sinon.stub(Promise, 'all').resolves(mockedAllTagsExist);
+    });
+
+    after(() => {
+      (Promise.all as sinon.SinonStub).restore();
+    });
+
     afterEach(() => {
       (DeviceModel.create as sinon.SinonStub).restore();
     });
@@ -88,7 +98,7 @@ describe('I&T Device Tests', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/devices')
-        .send({ version: "35001", tags: "1;2" });
+        .send({ version: "35001", tags: "1;2;3" });
 
       expect(chaiHttpResponse.status).to.be.equal(201);
       expect(chaiHttpResponse.body).to.be.deep.equal(mockedNewDeviceControllerResponse);
