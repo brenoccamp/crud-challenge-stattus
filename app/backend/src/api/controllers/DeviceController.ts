@@ -12,6 +12,7 @@ const ERROR_DEVICE_NOT_FOUND = { error: 'Device not found.' };
 const NOT_FOUND_STATUS_CODE = 404;
 const SUCCESS_STATUS_CODE = 200;
 const NO_CONTENT_STATUS_CODE = 204;
+const CREATED_STATUS_CODE = 201;
 
 export default class DeviceController implements IDeviceController {
   private _deviceService;
@@ -63,7 +64,7 @@ export default class DeviceController implements IDeviceController {
 
       if (!createdDevice) return res.status(NOT_FOUND_STATUS_CODE).json(ERROR_SOME_TAG_NOT_FOUND);
 
-      return res.status(201).json(createdDevice);
+      return res.status(CREATED_STATUS_CODE).json(createdDevice);
     } catch (error) {
       next(error);
     }

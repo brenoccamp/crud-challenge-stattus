@@ -11,14 +11,18 @@ const ERROR_ON_FIELD_NEW_DATA = {
 
 const patchDeviceValidate = (req: Request, res: Response, next: NextFunction): Response | void => {
   try {
-    const bodyDataArray = Object.entries(req.body)[0];
+    const [fieldToEdit, newData] = Object.entries(req.body)[0] as string[];
 
-    if (!bodyDataArray || typeof bodyDataArray[1] !== 'string' || bodyDataArray[1].length === 0) {
+    if (!fieldToEdit
+      || (fieldToEdit !== 'tags' && fieldToEdit !== 'version')
+      || newData.length === 0
+      || typeof newData !== 'string'
+    ) {
       return res.status(BAD_REQUEST_STATUS_HTTP).json(ERROR_ON_FIELD_NEW_DATA);
     }
 
-    if (bodyDataArray[0] === 'tags') {
-      const wrongTags = bodyDataArray[1].split(';').some((tag: string) => tag.length !== 1);
+    if (fieldToEdit === 'tags') {
+      const wrongTags = newData.split(';').some((tag: string) => tag.length !== 1);
 
       if (wrongTags) return res.status(UNPROCESSABLE_ENTITY_STATUS_HTTP).json(ERROR_TAGS_MALFORMED);
     }
