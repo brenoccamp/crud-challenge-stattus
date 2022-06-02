@@ -1,5 +1,6 @@
 import * as express from 'express';
 import devicesRouter from './api/routers/devicesRouter';
+import tagsRouter from './api/routers/tagsRouter';
 import ErrorMiddleware from './api/middlewares/error';
 
 class App {
@@ -25,6 +26,7 @@ class App {
     this.app.get('/', (_req, res) => res.status(200).json({ message: 'API is working!' }));
 
     this.app.use('/devices', devicesRouter);
+    this.app.use('/tags', tagsRouter);
     this.app.use(ErrorMiddleware);
   }
 
