@@ -12,10 +12,12 @@ export interface IDeviceController {
   getAllDevices(req: Request, res: Response, next: NextFunction): Promise<Response | void>;
   getDeviceById(req: Request, res: Response, next: NextFunction): Promise<Response | void>;
   createNewDevice(req: Request, res: Response, next: NextFunction): Promise<Response | void>;
+  editDevice(req: Request, res: Response, next: NextFunction): Promise<Response | void>;
 }
 
 export interface IDeviceService {
   getAllDevices(): Promise<IDevice[]>;
   getDeviceById(id: number): Promise<IDevice | null>;
   createNewDevice(newDevice: IDevice): Promise<{ createdId: number } | boolean>;
+  editDevice(id: number, newData: string, fieldToEdit: string): Promise<boolean>;
 }

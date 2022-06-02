@@ -34,12 +34,22 @@ export default class DeviceService implements IDeviceService {
   public createNewDevice = async (newDevice: IDevice):Promise<{ createdId: number; } | boolean> => {
     const { tags } = newDevice;
 
-    const allTagsExists = this.checkIfAllTagsExist(tags);
+    const allTagsExists = await this.checkIfAllTagsExist(tags);
 
     if (!allTagsExists) return allTagsExists;
 
     const createdDevice = await this._deviceModel.create({ ...newDevice });
 
     return { createdId: createdDevice.id };
+  };
+
+  public editDevice = async (id:number, newData:string, fieldToEdit:string):Promise<boolean> => {
+    if (fieldToEdit === 'tags') {
+      const allTagsExists = await this.checkIfAllTagsExist(newData);
+      if (!allTagsExists) return false;
+    }
+
+    await this._deviceModel.update({ [fieldToEdit]: newData }, { where: { id } });
+    return true;
   };
 }
