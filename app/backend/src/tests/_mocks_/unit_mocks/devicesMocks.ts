@@ -21,3 +21,7 @@ export const mockedAllDevices = [
       "updatedAt": new Date()
   }
 ];
+
+export const mockedCreatedNewDeviceID = { createdId: 1 };
+
+export const mockedNewDeviceData = { "version": "35001", "tags": "1" };
