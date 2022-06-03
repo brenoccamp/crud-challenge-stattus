@@ -1,6 +1,7 @@
 import * as express from 'express';
 import devicesRouter from './api/routers/devicesRouter';
 import tagsRouter from './api/routers/tagsRouter';
+import deviceTagsRouter from './api/routers/deviceTagsRouter';
 import ErrorMiddleware from './api/middlewares/error';
 
 class App {
@@ -27,6 +28,7 @@ class App {
 
     this.app.use('/devices', devicesRouter);
     this.app.use('/tags', tagsRouter);
+    this.app.use('/devices-tags', deviceTagsRouter);
     this.app.use(ErrorMiddleware);
   }
 
