@@ -12,7 +12,7 @@ const deviceService = new DeviceService();
 const deviceController = new DeviceController(deviceService);
 
 const errorObj = { error: 'Internal server error' };
-const notFoundError = { error: 'Device not found' };
+const notFoundError = { error: 'Device not found.' };
 const errorCreatingNewDevice = { error: 'Sorry. Any given tag does not exist. Check it and try again.' };
 
 describe('Device Controller Unit Tests', () => {
