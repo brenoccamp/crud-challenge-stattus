@@ -13,8 +13,7 @@ const patchDeviceValidate = (req: Request, res: Response, next: NextFunction): R
   try {
     const [fieldToEdit, newData] = Object.entries(req.body)[0] as string[];
 
-    if (!fieldToEdit
-      || (fieldToEdit !== 'tags' && fieldToEdit !== 'version')
+    if ((fieldToEdit !== 'tags' && fieldToEdit !== 'version')
       || newData.length === 0
       || typeof newData !== 'string'
     ) {
