@@ -21,7 +21,7 @@ const errorObj = { error: 'Internal server error'};
 describe('I&T Tag Tests', () => {
   let chaiHttpResponse: Response;
 
-  describe('Testing Route "/tags" to GET ALL TAGS', () => {
+  describe('Testing Route GET "/tags" to GET ALL TAGS', () => {
     afterEach(() => {
       (TagModel.findAll as sinon.SinonStub).restore();
     });
@@ -49,7 +49,7 @@ describe('I&T Tag Tests', () => {
     });
   });
 
-  describe('Testing Route "/tags/:id" to GET TAG BY ID', () => {
+  describe('Testing Route GET "/tags/:id" to GET TAG BY ID', () => {
     afterEach(() => {
       (TagModel.findByPk as sinon.SinonStub).restore();
     });
@@ -102,7 +102,7 @@ describe('I&T Tag Tests', () => {
         .post('/tags')
         .send({ color: '#000' });
 
-      expect(chaiHttpResponse.status).to.be.equal(422);
+      expect(chaiHttpResponse.status).to.be.equal(400);
       expect(chaiHttpResponse.body).to.be.deep.equal(error_missing_field);
     });
 
@@ -114,7 +114,7 @@ describe('I&T Tag Tests', () => {
       .post('/tags')
       .send({ name: 'São Paulo' });
 
-      expect(chaiHttpResponse.status).to.be.equal(422);
+      expect(chaiHttpResponse.status).to.be.equal(400);
       expect(chaiHttpResponse.body).to.be.deep.equal(error_missing_field);
     });
 
