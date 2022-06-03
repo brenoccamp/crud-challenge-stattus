@@ -43,7 +43,7 @@ tagsRouter.put(
 
 tagsRouter.delete(
   ROUTE_WITH_ID,
-  tagController.updateTag,
+  tagController.deleteTag,
 );
 
 export default tagsRouter;
